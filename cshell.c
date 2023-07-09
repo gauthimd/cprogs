@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define PI 3.14159
+#define pi 3.14159
 
 int main()
 {
