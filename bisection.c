@@ -7,7 +7,7 @@
 
 double f(double x)
 {
-	return pow(x,2)-2;
+	return exp(x)-3*x;
 }
 
 int main(int argc, char *argv[])

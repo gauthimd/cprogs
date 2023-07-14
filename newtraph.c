@@ -7,12 +7,12 @@
 
 double f(double x)
 {
-	return pow(x,2)-2;
+	return exp(x) - x*sin(x) - x*sin(pow(x,2));
 }
 
 double fp(double x)
 {
-	return 2*x;
+	return exp(x) - sin(x) - x*cos(x) - sin(pow(x,2)) - 2*pow(x,2)*cos(pow(x,2));
 }
 
 double newton(double x)
