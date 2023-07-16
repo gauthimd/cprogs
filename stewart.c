@@ -50,24 +50,43 @@ void ProtB(double g[3][3], double x, double y, double z)
 	}
 }
 
+void getlegvectors(double dist[6][3], double trans[3], double rot[3][3], double plat[6][3], double base[6][3])
+{
+	int i, j, k;
+	double prod[3] = {0};
+	for (i=0; i<6; i++)
+	{
+		for (j=0; j<3; j++)
+		{
+			for (k=0; j<3; k++)
+			{
+			}
+		}
+	}
+}
+
 int main()
 {
 	int i, j;
-	double normalvector[3], newangles[3], T[3];
-	double mat[3][3] = {0};  
-	double T0[3] = {0, 0, 10.0};
-	double P[6][3] = {{3.75,  -1.33, 10},     //These are the platform coordinates of the anchor points
+	double normalvector[3]; 			//This is the normal vector calculated from 3 individual points
+	double newangles[3]; 				//This is the x,y,z angles calculated for a given normal vector
+	double T[3];					//This is the translation vector 
+	double mat[3][3] = {0};  		   	//This is the rotational matrix for given x,y,z angles
+	double T0[3] = {0, 0, 10.0};		   	//This is the home position translation vector
+	double P[6][3] = { {3.75,  -1.33, 10},     	//These are the platform coordinates of the anchor points
 		          {-3.75,  1.33, 10},
 			  {0.00,  -4.00, 10},
 			  {0.00,   4.00, 10},
 			  {-3.75, -1.33, 10},
-			  {3.75,   1.33, 10}};
-	double B[6][3] = {{4,  -2.5, 0},          //These are the base coordinates of the anchor points
+			  {3.75,   1.33, 10} };
+	double B[6][3] = { {4,  -2.5, 0},          	//These are the base coordinates of the anchor points
 		          {-4,  2.5, 0},
 			  {0,  -5.0, 0},
 			  {0,   5.0, 0},
 			  {-4, -2.5, 0},
-			  {4,   2.5, 0}};
+			  {4,   2.5, 0} };
+	double d[6][3] = {0};				//These are the vectors for each leg, used to calculate length
+	double dlen[6];					//These are the 6 lengths for each leg, calculated from the leg vectors
 	normalvector[0] = .3;
 	normalvector[1] = 2;
 	normalvector[2] = -.1;
@@ -80,5 +99,6 @@ int main()
 		for (j=0; j<3; j++) printf("%lf ",mat[i][j]);
 		printf("\n");
 	}
+	getlegvectors(d, T, mat, P, B);
 	return 0;
 }
