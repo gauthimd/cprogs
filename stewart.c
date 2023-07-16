@@ -5,11 +5,33 @@
 
 #define pi 3.14159
 
+/*This function will get the normal vector of the surface created by three individual points
+-First points A,B,and C will be used to find 2 vectors, AB and AC
+-The cross-product AB x AC gives the vector normal to the surface created by these 2 vectors*/
+void getnormal()
+{
+}
+
+/*This function takes a vector (assumed to be a vector normal to a surface we wish the platform to match)
+and calculates the 3 angles the vector makes with the x, y, and z axis using the dot-product.
+These angles are then sent to the rotation matrix function to calculate the new rotational matrix
+of the platform frame with respect to the base frame*/
+void getangles(double vector[3], double angles[3])
+{
+	int i;
+	double len;
+	len = sqrt(pow(vector[0],2) + pow(vector[1],2) + pow(vector[2],2));
+	for (i=0; i<3; i++)
+	{
+		angles[i] = acos(vector[i]/len);
+	}
+}
+
 /*This is the rotational matrix of the platform frame with respect to the base frame. This matrix
  * is dotted with the P[i] vectors (the vectors from the platform origin to the platform anchor points)
  * and added to the translation vector T from which the base vectors to the anchor points 
  */
-void ProtB(double **g, double x, double y, double z)
+void ProtB(double g[3][3], double x, double y, double z)
 {
 	int i, j;
 	double h[3][3] =
@@ -28,35 +50,11 @@ void ProtB(double **g, double x, double y, double z)
 	}
 }
 
-/*This function takes a vector (assumed to be a vector normal to a surface we wish the platform to match)
-and calculates the 3 angles the vector makes with the x, y, and z axis using the dot-product.
-These angles are then sent to the rotation matrix function to calculate the new rotational matrix
-of the platform frame with respect to the base frame*/
-void getangles(double vector[3], double *angles)
-{
-	int i;
-	double len;
-	len = sqrt(pow(vector[0],2) + pow(vector[1],2) + pow(vector[2],2));
-	for (i=0; i<3; i++)
-	{
-		angles[i] = acos(vector[i]/len);
-	}
-}
-
-/*This function will get the normal vector of the surface created by three individual points
--First points A,B,and C will be used to find 2 vectors, AB and AC
--The cross-product AB x AC gives the vector normal to the surface created by these 2 vectors*/
-void getnormal()
-{
-}
-
-int stewmath()
+int main()
 {
 	int i, j;
-	double **mat;  
-	double normalvector[3];
-	double newangles[3];
-	double *T[3];
+	double normalvector[3], newangles[3], T[3];
+	double mat[3][3] = {0};  
 	double T0[3] = {0, 0, 10.0};
 	double P[6][3] = {{3.75,  -1.33, 10},     //These are the platform coordinates of the anchor points
 		          {-3.75,  1.33, 10},
@@ -73,11 +71,6 @@ int stewmath()
 	normalvector[0] = .3;
 	normalvector[1] = 2;
 	normalvector[2] = -.1;
-	mat = (double **)calloc(3, sizeof (double*));   	//This line and the for loop setup a 
-	for (i=0;i<3;i++)                               	//multidimensional array that can be passed 
-	{					        	//between functions
-		mat[i] = (double *)calloc(3, sizeof(double));
-	}
 	getangles(normalvector, newangles);			//This line calls the function to get the angles from the normal vector
 	printf("\nNew angles: %.3lfx %.3lfy %.3lfz\n\n", newangles[0]*180/pi, newangles[1]*180/pi, newangles[2]*180/pi);
 	ProtB(mat, newangles[0], newangles[1], newangles[2]);   //This line calls the function to obtain the rotational matrix for the 
@@ -89,10 +82,3 @@ int stewmath()
 	}
 	return 0;
 }
-
-int main()
-{
-	stewmath();
-	return 0;
-}
-
