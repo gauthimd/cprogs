@@ -21,12 +21,13 @@ void getangles(double vector[3], double angles[3])
 	int i;
 	double len;
 	len = sqrt(pow(vector[0],2) + pow(vector[1],2) + pow(vector[2],2));
-	//printf("%lf %lf %lf %lf",vector[0],vector[1],vector[2],len);
+	printf("%lf %lf %lf %lf",vector[0],vector[1],vector[2],len);
 	for (i=0; i<3; i++)
 	{
 		if (i==2) angles[i] = acos(vector[i]/len);
-		else angles[i] = acos((vector[i])/len)-pi/2;
+		else angles[i] = acos((vector[i])/len); //-pi/2;
 	}
+	printf("\nx=%lf y=%lf z=%lf\n", angles[0], angles[1], angles[2]);
 }
 
 /*This is the rotational matrix of the platform frame with respect to the base frame. This matrix
