@@ -24,8 +24,8 @@ void getangles(double vector[3], double angles[3])
 	printf("%lf %lf %lf %lf",vector[0],vector[1],vector[2],len);
 	for (i=0; i<3; i++)
 	{
-		if (i==2) angles[i] = acos(vector[i]/len);
-		else angles[i] = acos((vector[i])/len); //-pi/2;
+		if (i==2) angles[i] =fabs(acos(vector[i]/len));
+		else angles[i] = fabs(acos((vector[i])/len)-pi/2);
 	}
 	printf("\nx=%lf y=%lf z=%lf\n", angles[0], angles[1], angles[2]);
 }
@@ -47,7 +47,7 @@ void ProtB(double g[3][3], double x, double y, double z)
 		{
 			if (h[i][j] < .0001) h[i][j] = 0;
 	//		printf("%lf ", h[i][j]);
-			g[i][j] = h[i][j];
+			g[j][i] = h[i][j];
 		}
 	//	printf("\n");
 	}
